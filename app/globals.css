@@ -1,26 +1,203 @@
 @import "tailwindcss";
 
 :root {
+  /* Brand */
+  --primary: #1c3d9a;
+  --primary-hover: #152c75;
+  --primary-container: #ebf0ff;
+  --on-primary-container: #1c3d9a;
+
+  /* Secondary */
+  --secondary: #64748b;
+  
+  /* Background & Surface */
   --background: #ffffff;
-  --foreground: #171717;
+  --surface: #f8fafc;
+  
+  /* Typography */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  
+  /* Border */
+  --border: #e2e8f0;
+  
+  /* Alerts */
+  --success: #88c7a1;
+  --success-bg: #ecf7f0;
+  --error: #e8908c;
+  --error-container: #fceeed;
+  --warning: #e6c37a;
+  --warning-bg: #fcf6ea;
+  --info: #8fb2e6;
+  --info-bg: #edf3fb;
+  
+  /* Charts */
+  --chart-1: #1c3d9a;
+  --chart-2: #3b82f6;
+  --chart-3: #60a5fa;
+  --chart-4: #64748b;
+  --chart-5: #94a3b8;
+  --chart-6: #cbd5e1;
 }
+
+.dark {
+    /* Brand */
+    --primary: #4b7bff;
+    --primary-hover: #749aff;
+    --primary-container: #1e293b;
+    --on-primary-container: #ffffff;
+
+    /* Secondary */
+    --secondary: #94a3b8;
+    
+    /* Background & Surface */
+    --background: #0b1120;
+    --surface: #111827;
+    
+    /* Typography */
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    
+    /* Border */
+    --border: #334155;
+    
+    /* Alerts (Warna base sama, background/container menyesuaikan) */
+    --success-bg: #152a20;
+    --error-container: #361e1d;
+    --warning-bg: #332817;
+    --info-bg: #192336;
+    
+    /* Charts */
+    --chart-1: #4b7bff;
+    --chart-2: #60a5fa;
+    --chart-3: #93c5fd;
+    --chart-4: #94a3b8;
+    --chart-5: #64748b;
+    --chart-6: #475569;
+  }
 
 @theme inline {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-container: var(--primary-container);
+  --color-on-primary-container: var(--on-primary-container);
+  
+  --color-secondary: var(--secondary);
+  
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  
+  --color-border: var(--border);
+  
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-error: var(--error);
+  --color-error-container: var(--error-container);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+  --color-info: var(--info);
+  --color-info-bg: var(--info-bg);
+  
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+
+  /* Fonts (Typography System) */
+  --font-primary: var(--font-open-sans);
+  --font-secondary: var(--font-source-sans);
+  --font-tertiary: var(--font-maven-pro);
+  
+  --font-sans: var(--font-tertiary);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  /* --- A. Hero Section --- */
+  .hero-title {
+    font-family: var(--font-primary);
+    @apply font-extrabold text-4xl md:text-5xl lg:text-6xl leading-tight text-slate-800 dark:text-slate-100;
+  }
+  
+  .hero-subtitle {
+    font-family: var(--font-secondary);
+    @apply font-medium text-xl md:text-2xl leading-normal text-slate-500 dark:text-slate-400;
+  }
+
+  /* --- B. Konten Paragraf (Heading Dasar) --- */
+  h1 {
+    font-family: var(--font-primary);
+    @apply font-bold text-3xl md:text-5xl lg:text-6xl leading-tight;
+  }
+
+  h2 {
+    font-family: var(--font-primary);
+    @apply font-bold text-2xl md:text-3xl lg:text-4xl leading-snug;
+  }
+  
+  h3 {
+    font-family: var(--font-secondary);
+    @apply font-semibold text-2xl;
+  }
+  
+  p, .body-text {
+    font-family: var(--font-tertiary);
+    @apply font-normal text-base leading-relaxed;
+  }
+
+  /* --- C. Card Component --- */
+  .card-title {
+    font-family: var(--font-primary);
+    @apply font-semibold text-xl leading-[1.4];
+  }
+  
+  .card-meta {
+    font-family: var(--font-secondary);
+    @apply font-semibold text-xs uppercase tracking-wider;
+  }
+  
+  .card-excerpt {
+    font-family: var(--font-tertiary);
+    @apply font-normal text-sm leading-[1.5];
+  }
+
+  /* --- D. Form & Elemen UI Interaktif --- */
+  .form-label {
+    font-family: var(--font-secondary);
+    @apply font-semibold text-sm text-slate-700 dark:text-slate-300;
+  }
+  
+  .form-input {
+    font-family: var(--font-tertiary);
+    @apply font-normal text-base;
+  }
+  
+  .btn-text {
+    font-family: var(--font-primary);
+    @apply font-bold text-base;
+  }
+  
+  .helper-text {
+    font-family: var(--font-secondary);
+    @apply font-normal text-xs;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
 }
