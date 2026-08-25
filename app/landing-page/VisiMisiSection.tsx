@@ -33,37 +33,42 @@ export default function VisiMisiSection() {
   }, { scope: container });
 
   return (
-    <section ref={container} id="tentang" className="px-6 py-16 md:py-20">
-      <div className="max-w-5xl mx-auto">
-        {/* --- Visi --- */}
-        <div className="anim-visi mb-14">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-10 h-1 rounded-full bg-primary" />
-            <h2 className="text-text-primary text-2xl md:text-3xl">Visi</h2>
+    <section ref={container} id="tentang" className="px-6 py-16 md:py-24 bg-surface/30">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          
+          {/* --- Visi --- */}
+          <div className="anim-visi lg:col-span-5 bg-primary/5 p-8 md:p-10 rounded-3xl border border-primary/10 lg:sticky lg:top-32">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="w-10 h-1 rounded-full bg-primary" />
+              <h2 className="text-text-primary text-2xl md:text-3xl">Visi Kami</h2>
+            </div>
+            <p className="text-lg md:text-xl font-medium text-text-primary leading-relaxed">
+              "Menjadi Perusahaan Outsourcing & Cleaning Service yang terbaik
+              dengan menciptakan tenaga kerja yang berakhlak, berkualitas,
+              bertanggung jawab & selalu mengutamakan kepuasan pelanggan."
+            </p>
           </div>
-          <p className="body-text text-text-secondary max-w-3xl leading-relaxed">
-            Menjadi Perusahaan Outsourcing &amp; Cleaning Service yang terbaik
-            dengan menciptakan tenaga kerja yang berakhlak, berkualitas,
-            bertanggung jawab &amp; selalu mengutamakan kepuasan pelanggan.
-          </p>
-        </div>
 
-        {/* --- Misi --- */}
-        <div className="anim-visi">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="w-10 h-1 rounded-full bg-primary" />
-            <h2 className="text-text-primary text-2xl md:text-3xl">Misi</h2>
+          {/* --- Misi --- */}
+          <div className="lg:col-span-7 mt-8 lg:mt-0">
+            <div className="anim-visi flex items-center gap-3 mb-8">
+              <span className="w-10 h-1 rounded-full bg-primary" />
+              <h2 className="text-text-primary text-2xl md:text-3xl">Misi Kami</h2>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+              {misiItems.map((item, idx) => (
+                <div key={idx} className="anim-visi flex gap-4 items-start">
+                  <span className="btn-text text-primary text-lg mt-0.5 shrink-0 opacity-90 font-bold">
+                    {String(idx + 1).padStart(2, '0')}.
+                  </span>
+                  <p className="body-text text-text-secondary text-sm md:text-base leading-relaxed">{item}</p>
+                </div>
+              ))}
+            </div>
           </div>
-          <ol className="space-y-4 max-w-3xl">
-            {misiItems.map((item, idx) => (
-              <li key={idx} className="anim-visi flex gap-4 items-start">
-                <span className="btn-text text-primary mt-0.5 shrink-0">
-                  {String(idx + 1).padStart(2, '0')}
-                </span>
-                <p className="body-text text-text-secondary">{item}</p>
-              </li>
-            ))}
-          </ol>
+
         </div>
       </div>
     </section>

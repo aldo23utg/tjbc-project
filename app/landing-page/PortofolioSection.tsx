@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -43,6 +43,44 @@ const reviews = [
 export default function PortofolioSection() {
   const container = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    
+    const containerCenter = container.scrollLeft + container.clientWidth / 2;
+    
+    let closestIndex = 0;
+    let minDistance = Infinity;
+    
+    Array.from(container.children).forEach((child, index) => {
+      const childElement = child as HTMLElement;
+      const childCenter = childElement.offsetLeft + childElement.clientWidth / 2;
+      
+      const distance = Math.abs(childCenter - containerCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+    
+    if (closestIndex !== activeIndex) {
+      setActiveIndex(closestIndex);
+    }
+  };
+
+  const scrollTo = (index: number) => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const children = Array.from(container.children) as HTMLElement[];
+    if (children[index]) {
+      const child = children[index];
+      const scrollPos = child.offsetLeft - (container.clientWidth - child.clientWidth) / 2;
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+      setActiveIndex(index);
+    }
+  };
 
   useGSAP(() => {
     gsap.fromTo('.anim-port', 
@@ -92,17 +130,17 @@ export default function PortofolioSection() {
         </div> */}
 
         {/* --- Layout Utama (Kiri Teks, Kanan Slider) --- */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-8 items-start lg:items-center">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start lg:items-center">
           
           {/* Sisi Kiri */}
           <div className="anim-port w-full lg:w-1/3 flex flex-col justify-center">
-            <Quote className="w-16 h-16 text-border mb-6 fill-border" />
-            <h3 className="text-3xl md:text-4xl font-bold text-text-primary mb-10 leading-snug">
+            <Quote className="w-16 h-16 text-border mb-4 md:mb-6 fill-border" />
+            <h3 className="text-3xl md:text-4xl font-bold text-text-primary mb-2 md:mb-10 leading-snug">
               Apa kata <br className="hidden lg:block"/> pelanggan kami
             </h3>
             
             {/* Navigasi (Panah) */}
-            <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
               <button 
                 onClick={scrollLeft}
                 className="p-2 hover:bg-border/50 rounded-full transition-colors text-text-primary cursor-pointer"
@@ -128,12 +166,13 @@ export default function PortofolioSection() {
           <div className="anim-port w-full lg:w-2/3 relative min-w-0">
             <div 
               ref={scrollRef}
-              className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-8 pt-4 px-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              onScroll={handleScroll}
+              className="flex gap-3 md:gap-6 overflow-x-auto snap-x snap-mandatory md:snap-none pb-8 pt-4 px-[10vw] md:px-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
-              {reviews.map((review) => (
+              {reviews.map((review, idx) => (
                 <div 
                   key={review.id} 
-                  className="w-full shrink-0 md:w-auto md:min-w-[380px] snap-center md:snap-start flex flex-col"
+                  className={`w-[80vw] md:w-[380px] shrink-0 snap-center snap-always md:snap-align-none flex flex-col transition-all duration-300 ease-in-out ${activeIndex === idx ? 'scale-100 opacity-100' : 'scale-[0.85] opacity-50 md:scale-100 md:opacity-100'}`}
                 >
                   {/* Bubble Ulasan */}
                   <div className="bg-background rounded-3xl p-8 shadow-sm relative mb-6 border border-border/50">
@@ -172,6 +211,20 @@ export default function PortofolioSection() {
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Mobile Navigation Dots */}
+            <div className="flex md:hidden justify-center items-center gap-2 mt-2">
+              {reviews.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => scrollTo(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === idx ? 'w-6 bg-primary' : 'w-2 bg-border'
+                  }`}
+                />
               ))}
             </div>
           </div>

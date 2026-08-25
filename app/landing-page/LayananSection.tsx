@@ -1,12 +1,11 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, TreePine, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Sparkles, TreePine, ShieldCheck } from 'lucide-react';
 import { ServiceCard } from '@/components/layout/ServiceCard';
-import { Button } from '@/components/ui/button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,16 +36,45 @@ const layananData = [
 export default function LayananSection() {
   const container = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -300, behavior: 'smooth' });
+  const handleScroll = () => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    
+    // Center position of the scroll container
+    const containerCenter = container.scrollLeft + container.clientWidth / 2;
+    
+    let closestIndex = 0;
+    let minDistance = Infinity;
+    
+    // Find the child closest to the center
+    Array.from(container.children).forEach((child, index) => {
+      const childElement = child as HTMLElement;
+      // Center position of the child relative to the scroll container
+      const childCenter = childElement.offsetLeft + childElement.clientWidth / 2;
+      
+      const distance = Math.abs(childCenter - containerCenter);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestIndex = index;
+      }
+    });
+    
+    if (closestIndex !== activeIndex) {
+      setActiveIndex(closestIndex);
     }
   };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 300, behavior: 'smooth' });
+  const scrollTo = (index: number) => {
+    if (!scrollContainerRef.current) return;
+    const container = scrollContainerRef.current;
+    const children = Array.from(container.children) as HTMLElement[];
+    if (children[index]) {
+      const child = children[index];
+      const scrollPos = child.offsetLeft - (container.clientWidth - child.clientWidth) / 2;
+      container.scrollTo({ left: scrollPos, behavior: 'smooth' });
+      setActiveIndex(index);
     }
   };
 
@@ -78,15 +106,17 @@ export default function LayananSection() {
           </p>
         </div>
 
-        {/* Cards */}
-        <div 
-          ref={scrollContainerRef}
-          className="mt-12 flex overflow-x-auto sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-6 snap-x snap-mandatory sm:snap-none pb-4 sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        >
+        <div className="anim-layanan w-full relative">
+          {/* Cards */}
+          <div 
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            className="mt-12 flex overflow-x-auto sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 snap-x snap-mandatory sm:snap-none pb-4 sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none] px-[10vw] sm:px-0"
+          >
           {layananData.map((item, idx) => (
             <ServiceCard
               key={item.number}
-              className="w-[85vw] sm:w-auto shrink-0 snap-center sm:snap-align-none"
+              className={`w-[80vw] sm:w-auto shrink-0 snap-center snap-always sm:snap-align-none transition-all duration-300 ease-in-out ${activeIndex === idx ? 'scale-100 opacity-100' : 'scale-[0.85] opacity-50 sm:scale-100 sm:opacity-100'}`}
               number={item.number}
               icon={item.icon}
               title={item.judul}
@@ -95,14 +125,19 @@ export default function LayananSection() {
           ))}
         </div>
 
-        {/* Mobile Navigation Arrows */}
-        <div className="flex sm:hidden justify-center gap-4 mt-6">
-          <Button variant="outline" size="icon" className="rounded-full w-12 h-12 border-primary/20 text-primary hover:bg-primary hover:text-white" onClick={scrollLeft} aria-label="Scroll left">
-            <ChevronLeft className="w-6 h-6" />
-          </Button>
-          <Button variant="outline" size="icon" className="rounded-full w-12 h-12 border-primary/20 text-primary hover:bg-primary hover:text-white" onClick={scrollRight} aria-label="Scroll right">
-            <ChevronRight className="w-6 h-6" />
-          </Button>
+          {/* Mobile Navigation Dots */}
+          <div className="flex sm:hidden justify-center items-center gap-2 mt-6">
+            {layananData.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => scrollTo(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  activeIndex === idx ? 'w-6 bg-primary' : 'w-2 bg-border'
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

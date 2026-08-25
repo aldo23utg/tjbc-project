@@ -31,7 +31,7 @@ function CopyItem({ value, href }: { value: string; href: string }) {
       </a>
       <button 
         onClick={handleCopy} 
-        className="p-1.5 rounded-md text-text-secondary hover:text-primary hover:bg-primary/10 transition-colors opacity-0 group-hover:opacity-100 focus:opacity-100"
+        className="p-1.5 rounded-md text-text-secondary bg-surface border border-border shadow-sm hover:text-primary hover:bg-primary/5 transition-colors"
         title="Salin otomatis"
       >
         {copied ? <Check className="w-4 h-4 text-success" /> : <Copy className="w-4 h-4" />}
@@ -62,7 +62,7 @@ export default function ContactSection() {
             <div className="w-full h-56 md:h-64 rounded-xl overflow-hidden bg-surface border border-border relative">
               <iframe 
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3956.2428585444743!2d112.69539307410292!3d-7.438379673286377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7e1554589d97d%3A0xc3cfd713c4c1a79!2sPerumahan%20Bumi%20Suko%20Indah!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-                className="w-full h-full border-0 grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
+                className="w-full h-full border-0 transition-all duration-500" 
                 loading="lazy" 
               />
             </div>
