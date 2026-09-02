@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check } from '@/components/ui/icons';
 
 const APP_EMAIL = 'tunasjayaclean@gmail.com';
 const APP_PHONE = '081235188282';

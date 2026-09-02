@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, TreePine, ShieldCheck } from 'lucide-react';
+import { Sparkles, TreePine, ShieldCheck } from '@/components/ui/icons';
 import { ServiceCard } from '@/components/layout/ServiceCard';
 
 gsap.registerPlugin(ScrollTrigger);

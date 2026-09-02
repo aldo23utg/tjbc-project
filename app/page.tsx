@@ -1,9 +1,9 @@
-import HeroSection from './HeroSection';
-import VisiMisiSection from './VisiMisiSection';
-import LayananSection from './LayananSection';
-import KarirSection from './KarirSection';
-import ContactSection from './ContactSection';
-import PortofolioSection from './PortofolioSection';
+import HeroSection from '@/components/sections/landing-page/HeroSection';
+import VisiMisiSection from '@/components/sections/landing-page/VisiMisiSection';
+import LayananSection from '@/components/sections/landing-page/LayananSection';
+import KarirSection from '@/components/sections/landing-page/KarirSection';
+import ContactSection from '@/components/sections/landing-page/ContactSection';
+import PortofolioSection from '@/components/sections/landing-page/PortofolioSection';
 
 export default function LandingPage() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 
 export default function KarirSection() {
   return (
@@ -19,11 +19,12 @@ export default function KarirSection() {
           bagian dari tim profesional kami.
         </p>
 
-        <Button className="rounded-full shadow-md shadow-primary/20 px-6 h-10 text-sm hover:scale-105 transition-transform" asChild>
-          <a href="#">
-            Informasi Selengkapnya
-          </a>
-        </Button>
+        <a 
+          href="#" 
+          className={buttonVariants({ className: "rounded-full shadow-md shadow-primary/20 px-6 h-10 text-sm hover:scale-105 transition-transform" })}
+        >
+          Informasi Selengkapnya
+        </a>
       </div>
     </section>
   );

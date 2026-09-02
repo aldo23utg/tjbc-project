@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body className={`${openSans.variable} ${sourceSans.variable} ${mavenPro.variable} font-sans antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider defaultTheme="system">
           <SmoothScroller>
             <Navbar />
             {children}

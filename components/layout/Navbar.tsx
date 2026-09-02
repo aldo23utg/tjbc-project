@@ -13,12 +13,12 @@ export default function Navbar() {
           <Link href="#karir" className="hover:text-primary transition-colors">Karir</Link>
           <Link href="#layanan" className="hover:text-primary transition-colors">Layanan</Link>
         </div>
-        {/* <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4">
           <ThemeToggle />
           <button className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-hover transition-colors btn-text">
             Hubungi Kami
           </button>
-        </div> */}
+        </div>
       </div>
     </nav>
   );

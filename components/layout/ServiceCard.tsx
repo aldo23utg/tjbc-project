@@ -1,5 +1,5 @@
 import * as React from "react"
-import { LucideIcon } from "lucide-react"
+import { type IconComponent } from "@/components/ui/icons"
 
 import { Badge } from "@/components/ui/badge"
 import {
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils"
 
 export interface ServiceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   number: string
-  icon: LucideIcon
+  icon: IconComponent
   title: string
   copy: string
 }

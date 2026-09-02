@@ -4,8 +4,7 @@ import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Star, Quote, ArrowLeft, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Star, QuoteIcon, ArrowLeft, ArrowRight } from '@/components/ui/icons';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -134,7 +133,7 @@ export default function PortofolioSection() {
           
           {/* Sisi Kiri */}
           <div className="anim-port w-full lg:w-1/3 flex flex-col justify-center">
-            <Quote className="w-16 h-16 text-border mb-4 md:mb-6 fill-border" />
+            <QuoteIcon className="w-16 h-16 text-border mb-4 md:mb-6 fill-border" />
             <h3 className="text-3xl md:text-4xl font-bold text-text-primary mb-2 md:mb-10 leading-snug">
               Apa kata <br className="hidden lg:block"/> pelanggan kami
             </h3>

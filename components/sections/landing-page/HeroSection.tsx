@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ShieldCheck, Award, Zap, CalendarClock, Briefcase } from 'lucide-react';
+import { ShieldCheck, Award, Zap, CalendarClock, Briefcase } from '@/components/ui/icons';
 
 const features = [
   { icon: ShieldCheck, label: 'Terpercaya' },
@@ -46,7 +46,7 @@ export default function HeroSection() {
           </div>
           
           {/* --- Fitur Tambahan --- */}
-          < div className="anim-hero mt-8 flex flex-nowrap justify-between items-start gap-2 md:gap-4 w-full overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div className="anim-hero mt-8 flex flex-nowrap justify-between items-start gap-2 md:gap-4 w-full overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {features.map((feature, idx) => (
               <div key={idx} className="flex flex-col items-center flex-1 min-w-[60px] md:min-w-[0]">
                 <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary mb-2 md:mb-3" strokeWidth={1.5} />
