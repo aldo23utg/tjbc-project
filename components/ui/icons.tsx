@@ -135,5 +135,85 @@ export function Check({ size, className, ...props }: IconProps) {
   );
 }
 
+export function BroomIcon({ size, className, ...props }: IconProps) {
+  return (
+    <svg {...defaultProps} width={size || 24} height={size || 24} className={className} {...props}>
+      <path d="M12 2v10" />
+      <path d="M5 12h14l1 8H4l1-8Z" />
+      <path d="M8 20v-4" />
+      <path d="M12 20v-4" />
+      <path d="M16 20v-4" />
+    </svg>
+  );
+}
+
+export function ShieldHalfIcon({ size, className, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size || 24}
+      height={size || 24}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      {...props}
+    >
+      <path
+        d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 3v19c-4.16-1.45-8-3.95-8-9V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72A1.17 1.17 0 0 1 12 2z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
+export function TruckIcon({ size, className, ...props }: IconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size || 24}
+      height={size || 24}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      {...props}
+    >
+      <path
+        d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
+        fill="currentColor"
+      />
+      <path
+        d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M15 18H9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="17" cy="18" r="2" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="7" cy="18" r="2" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 // Type export for ServiceCard compatibility
 export type IconComponent = React.FC<IconProps>;

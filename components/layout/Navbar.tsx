@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -34,22 +36,37 @@ export default function Navbar() {
           className="text-2xl font-bold text-primary tracking-tight font-primary relative z-[60] md:ml-0 ml-4 flex-1 md:flex-none"
           onClick={() => setIsOpen(false)}
         >
-          TJBC<span className="text-blue-500">.</span>
+          TJBC<span className="text-primary">.</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8 font-medium text-text-secondary font-secondary">
-          <Link href="/" className="hover:text-primary transition-colors">Beranda</Link>
-          <Link href="#karir" className="hover:text-primary transition-colors">Karir</Link>
-          <Link href="#layanan" className="hover:text-primary transition-colors">Layanan</Link>
+          <Link 
+            href="/" 
+            className={`hover:text-primary transition-colors ${pathname === '/' ? 'text-primary font-semibold' : ''}`}
+          >
+            Beranda
+          </Link>
+          <Link 
+            href="/karir" 
+            className={`hover:text-primary transition-colors ${pathname === '/karir' ? 'text-primary font-semibold' : ''}`}
+          >
+            Karir
+          </Link>
+          <Link 
+            href="/#layanan" 
+            className="hover:text-primary transition-colors"
+          >
+            Layanan
+          </Link>
         </div>
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
-          <button className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-hover transition-colors btn-text">
+          <Link href="/#kontak" className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-hover transition-colors btn-text">
             Hubungi Kami
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -69,15 +86,27 @@ export default function Navbar() {
       >
         {/* Navigation Links */}
         <div className="flex flex-col gap-2 font-tertiary text-text-secondary">
-          <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors" onClick={toggleMenu}>
+          <Link 
+            href="/" 
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors ${pathname === '/' ? 'bg-primary-container text-primary font-semibold' : ''}`} 
+            onClick={toggleMenu}
+          >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
             Beranda
           </Link>
-          <Link href="#karir" className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors" onClick={toggleMenu}>
+          <Link 
+            href="/karir" 
+            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors ${pathname === '/karir' ? 'bg-primary-container text-primary font-semibold' : ''}`} 
+            onClick={toggleMenu}
+          >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
             Karir
           </Link>
-          <Link href="#layanan" className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors" onClick={toggleMenu}>
+          <Link 
+            href="/#layanan" 
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors" 
+            onClick={toggleMenu}
+          >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
             Layanan
           </Link>

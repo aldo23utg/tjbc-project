@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { buttonVariants } from '@/components/ui/button';
 
 export default function KarirSection() {
@@ -19,12 +20,12 @@ export default function KarirSection() {
           bagian dari tim profesional kami.
         </p>
 
-        <a 
-          href="#" 
+        <Link 
+          href="/karir" 
           className={buttonVariants({ className: "rounded-full shadow-md shadow-primary/20 px-6 h-10 text-sm hover:scale-105 transition-transform" })}
         >
           Informasi Selengkapnya
-        </a>
+        </Link>
       </div>
     </section>
   );
