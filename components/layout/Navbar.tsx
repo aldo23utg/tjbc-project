@@ -1,149 +1,246 @@
-"use client";
+'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 12);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  const closeDrawer = () => setIsOpen(false);
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-      isOpen 
-        ? "bg-transparent border-transparent backdrop-blur-none" 
-        : "bg-background/80 backdrop-blur-md border-b border-border"
-    }`}>
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        
-        {/* Mobile Burger Button */}
-        <button
-          className="md:hidden flex flex-col justify-center items-start gap-1.5 z-[60] relative w-8 h-8 cursor-pointer text-text-primary"
-          onClick={toggleMenu}
-          aria-label="Menu"
-        >
-          <span className={`block h-0.5 bg-current transition-all duration-300 origin-center ${isOpen ? 'w-5 rotate-45 translate-y-[8px]' : 'w-6'}`} />
-          <span className={`block w-6 h-0.5 bg-current transition-all duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
-          <span className={`block h-0.5 bg-current transition-all duration-300 origin-center ${isOpen ? 'w-5 -rotate-45 -translate-y-[8px]' : 'w-6'}`} />
-        </button>
-
-        {/* Logo */}
-        <Link 
-          href="/" 
-          className="text-2xl font-bold text-primary tracking-tight font-primary relative z-[60] md:ml-0 ml-4 flex-1 md:flex-none"
-          onClick={() => setIsOpen(false)}
-        >
-          TJBC<span className="text-primary">.</span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex gap-8 font-medium text-text-secondary font-secondary">
-          <Link 
-            href="/" 
-            className={`hover:text-primary transition-colors ${pathname === '/' ? 'text-primary font-semibold' : ''}`}
-          >
-            Beranda
-          </Link>
-          <Link 
-            href="/karir" 
-            className={`hover:text-primary transition-colors ${pathname === '/karir' ? 'text-primary font-semibold' : ''}`}
-          >
-            Karir
-          </Link>
-          <Link 
-            href="/#layanan" 
-            className="hover:text-primary transition-colors"
-          >
-            Layanan
-          </Link>
-        </div>
-
-        {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4">
-          <ThemeToggle />
-          <Link href="/#kontak" className="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-hover transition-colors btn-text">
-            Hubungi Kami
-          </Link>
-        </div>
-      </div>
-
-      {/* Overlay Background */}
-      <div 
-        className={`fixed inset-0 bg-text-primary/40 transition-opacity duration-300 md:hidden z-40 ${
-          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        }`}
-        onClick={toggleMenu}
-      />
-
-      {/* Mobile Sidebar */}
-      <div 
-        className={`fixed top-0 left-0 h-[100dvh] w-[80vw] max-w-[320px] bg-surface border-r border-border shadow-2xl transition-transform duration-300 ease-in-out z-50 md:hidden flex flex-col pt-24 px-6 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+    <>
+      <header
+        id="main-navbar"
+        className={`sticky top-0 z-40 w-full bg-light-surface dark:bg-dark-surface border-b transition-colors duration-state-change ease-state-change ${
+          scrolled
+            ? 'border-light-border dark:border-dark-border'
+            : 'border-transparent'
         }`}
       >
-        {/* Navigation Links */}
-        <div className="flex flex-col gap-2 font-tertiary text-text-secondary">
-          <Link 
-            href="/" 
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors ${pathname === '/' ? 'bg-primary-container text-primary font-semibold' : ''}`} 
-            onClick={toggleMenu}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between gap-6">
+          <Link
+            href="/"
+            className="inline-flex items-baseline gap-0.5 font-display text-headline-md tracking-tight text-light-on-surface dark:text-dark-on-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-light-primary"
+            aria-label="Beranda TJBC"
+            onClick={closeDrawer}
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-            Beranda
+            <span>TJBC</span>
+            <span className="text-light-primary dark:text-dark-accent-blue">.</span>
           </Link>
-          <Link 
-            href="/karir" 
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors ${pathname === '/karir' ? 'bg-primary-container text-primary font-semibold' : ''}`} 
-            onClick={toggleMenu}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-            Karir
-          </Link>
-          <Link 
-            href="/#layanan" 
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-primary-container hover:text-primary transition-colors" 
-            onClick={toggleMenu}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
-            Layanan
-          </Link>
-          
-          {/* Theme Toggle - Ikon ThemeToggle pindah ke kiri */}
-          <div 
-            className="flex items-center gap-3 px-3 py-2.5 mt-2 rounded-lg bg-surface border border-border cursor-pointer hover:bg-primary-container hover:text-primary transition-colors"
-            onClick={(e) => {
-              const toggleBtn = e.currentTarget.querySelector('button');
-              if (toggleBtn && !toggleBtn.contains(e.target as Node)) {
-                toggleBtn.click();
-              }
-            }}
-          >
-            <ThemeToggle />
-            <span className="pointer-events-none">Tema Tampilan</span>
+
+          <nav aria-label="Navigasi Utama" className="hidden md:flex items-center gap-10">
+            <Link
+              href="/"
+              className={`relative py-2 font-label text-label-lg transition-colors duration-state-change ${
+                pathname === '/'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface'
+              }`}
+            >
+              <span>Beranda</span>
+              {pathname === '/' && (
+                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-light-primary dark:bg-dark-accent-blue" />
+              )}
+            </Link>
+            <Link
+              href="/#layanan"
+              className="relative py-2 font-label text-label-lg text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface transition-colors duration-state-change"
+            >
+              <span>Layanan</span>
+            </Link>
+            <Link
+              href="/karir"
+              className={`relative py-2 font-label text-label-lg transition-colors duration-state-change ${
+                pathname === '/karir'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface'
+              }`}
+            >
+              <span>Karir</span>
+              {pathname === '/karir' && (
+                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-light-primary dark:bg-dark-accent-blue" />
+              )}
+            </Link>
+          </nav>
+
+          <div className="hidden md:flex items-center gap-4">
+            <ThemeToggle variant="desktop" />
+            <Link
+              href="/#kontak"
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change ease-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
+            >
+              <span>Hubungi Kami</span>
+            </Link>
           </div>
-        </div>
-        
-        {/* Card Promo / Call to Action */}
-        <div className="mt-auto mb-8 bg-primary-container rounded-2xl p-5 relative overflow-hidden flex flex-col items-center text-center">
-          <div className="absolute -top-4 w-10 h-10 bg-primary rounded-full opacity-20 blur-md"></div>
-          
-          <h4 className="font-primary font-bold text-primary mb-2">Pusat Bantuan</h4>
-          <p className="font-tertiary text-xs text-text-secondary mb-5">
-            Layanan pengaduan dan informasi operasional saat ini sedang dalam pemeliharaan.
-          </p>
-          
-          <button 
-            disabled 
-            className="w-full bg-primary/60 text-white/80 py-2.5 rounded-xl font-primary font-semibold text-sm cursor-not-allowed transition-all"
+
+          <button
+            type="button"
+            onClick={() => setIsOpen(true)}
+            className="md:hidden inline-flex items-center justify-center w-11 h-11 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface cursor-pointer"
+            aria-label="Buka menu navigasi"
+            aria-controls="mobile-drawer"
+            aria-expanded={isOpen}
           >
-            Hubungi Kami
+            <svg
+              className="w-5 h-5"
+              viewBox="0 0 20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              aria-hidden="true"
+            >
+              <path d="M3 6h14M3 10h14M3 14h14" strokeLinecap="square" />
+            </svg>
           </button>
         </div>
+      </header>
 
-      </div>
-    </nav>
+      {/* Mobile Drawer Backdrop */}
+      <div
+        onClick={closeDrawer}
+        className={`fixed inset-0 z-50 bg-deep-navy/60 transition-opacity duration-drawer-slide md:hidden ${
+          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        aria-hidden="true"
+      />
+
+      {/* Mobile Sidebar Drawer */}
+      <aside
+        id="mobile-drawer"
+        className={`fixed inset-y-0 right-0 z-50 w-80 max-w-full bg-light-surface-card dark:bg-dark-surface-card border-l border-light-border dark:border-dark-border transform transition-transform duration-drawer-slide ease-drawer-slide flex flex-col justify-between p-6 overflow-y-auto md:hidden ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        aria-label="Menu Seluler"
+        aria-hidden={!isOpen}
+      >
+        <div className="flex flex-col gap-8">
+          <div className="flex items-center justify-between pb-4 border-b border-light-border dark:border-dark-border">
+            <span className="font-display text-headline-md text-light-on-surface dark:text-dark-on-surface">
+              TJBC<span className="text-light-primary dark:text-dark-accent-blue">.</span>
+            </span>
+            <button
+              type="button"
+              onClick={closeDrawer}
+              className="inline-flex items-center justify-center w-10 h-10 rounded-sm border border-light-border dark:border-dark-border text-light-on-surface dark:text-dark-on-surface cursor-pointer"
+              aria-label="Tutup menu"
+            >
+              <svg
+                className="w-4 h-4"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                aria-hidden="true"
+              >
+                <path d="M3 3l10 10M13 3L3 13" strokeLinecap="square" />
+              </svg>
+            </button>
+          </div>
+
+          <nav className="flex flex-col gap-2" aria-label="Navigasi Seluler">
+            <Link
+              href="/"
+              onClick={closeDrawer}
+              className={`py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md flex items-center justify-between ${
+                pathname === '/'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface dark:text-dark-on-surface'
+              }`}
+            >
+              <span>Beranda</span>
+              <span className="font-mono text-mono-sm">01</span>
+            </Link>
+            <Link
+              href="/#layanan"
+              onClick={closeDrawer}
+              className="py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md text-light-on-surface dark:text-dark-on-surface flex items-center justify-between"
+            >
+              <span>Layanan</span>
+              <span className="font-mono text-mono-sm">02</span>
+            </Link>
+            <Link
+              href="/karir"
+              onClick={closeDrawer}
+              className={`py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md flex items-center justify-between ${
+                pathname === '/karir'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface dark:text-dark-on-surface'
+              }`}
+            >
+              <span>Karir</span>
+              <span className="font-mono text-mono-sm">03</span>
+            </Link>
+            <Link
+              href="/#kontak"
+              onClick={closeDrawer}
+              className="py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md text-light-on-surface dark:text-dark-on-surface flex items-center justify-between"
+            >
+              <span>Hubungi Kami</span>
+              <span className="font-mono text-mono-sm">04</span>
+            </Link>
+          </nav>
+
+          <div className="flex flex-col gap-3">
+            <span className="font-mono text-mono-sm uppercase text-light-on-surface-muted dark:text-dark-on-surface-muted">
+              Tampilan Tema
+            </span>
+            <ThemeToggle variant="mobile" />
+          </div>
+        </div>
+
+        {/* Help Center Card */}
+        <div className="mt-8 p-5 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-secondary dark:bg-dark-surface-secondary flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+              PUSAT BANTUAN
+            </span>
+            <p className="font-body text-body-md text-light-on-surface dark:text-dark-on-surface text-balance">
+              Senin — Jumat, 08:00 — 17:00 WIB
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <a
+              href="https://wa.me/6281294007820"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg"
+            >
+              <span>WhatsApp</span>
+            </a>
+            <a
+              href="tel:+622178834510"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface font-label text-label-lg"
+            >
+              <span>Telepon</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

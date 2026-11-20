@@ -4,165 +4,175 @@ import { useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { QuoteIcon, ArrowLeft, ArrowRight } from '@/components/ui/icons';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const reviews = [
+const testimonials = [
   {
     id: 1,
-    name: 'Budi Santoso',
-    text: 'Sangat merekomendasikan layanan PT Tunas Jaya Bersinar Cemerlang. Sejak bekerja sama, manajemen kebersihan fasilitas kantor kami menjadi jauh lebih baik dan terstruktur. Tim yang ditugaskan sangat profesional dan proaktif.',
-    date: '2 minggu yang lalu',
-    rating: 5,
+    quote:
+      'Kedisiplinan tim kebersihan TJBC terasa sejak bulan pertama. Audit area lobi dan ruang rapat kami selalu melampaui standar SLA tanpa perlu pengawasan berlebih dari tim internal.',
+    author: 'Hendra Wijaya',
+    role: 'Head of General Affairs',
+    company: 'PT GRAHA SENTOSA PROPERTI',
   },
   {
     id: 2,
-    name: 'Siti Aminah',
-    text: 'Sebelum menggunakan layanan outsourcing dari Tunas Jaya, kami sering kesulitan mengelola jadwal tenaga keamanan. Sekarang, semuanya berjalan lancar dan keamanan lingkungan perusahaan sangat terjamin. Respons manajemen mereka juga sangat cepat.',
-    date: '3 minggu yang lalu',
-    rating: 5,
+    quote:
+      'Area taman dan lanskap kawasan perkantoran kami jauh lebih terawat dan konsisten sepanjang musim. Penjadwalan pemangkasan dan pemupukannya sangat rapi.',
+    author: 'Ratna Kusuma',
+    role: 'Building Manager',
+    company: 'MENARA MANDALA SUDIRMAN',
   },
   {
     id: 3,
-    name: 'Hendro Wibowo',
-    text: 'Layanan perawatan taman mereka luar biasa. Area hijau di sekitar pabrik kami yang sebelumnya kurang terawat kini tampak asri dan rapi. Karyawan kami pun merasa lebih nyaman bekerja.',
-    date: '1 bulan yang lalu',
-    rating: 5,
+    quote:
+      'Untuk pengadaan tenaga pengemudi eksekutif dan petugas keamanan, TJBC memberikan transparansi penuh atas kelengkapan legalitas serta pergantian personel yang cepat.',
+    author: 'Bambang Sutrisno',
+    role: 'VP Corporate Services',
+    company: 'BANK NUSANTARA KARYA',
   },
   {
     id: 4,
-    name: 'Diana Putri',
-    text: 'Kami sangat puas dengan layanan general cleaning yang diberikan. Noda membandel di area produksi yang sulit dibersihkan kini hilang tak berbekas. Tim pembersih bekerja dengan sangat teliti dan mematuhi standar K3 yang ketat.',
-    date: '2 bulan yang lalu',
-    rating: 5,
+    quote:
+      'Komunikasi dengan tim supervisor TJBC sangat lugas. Setiap permintaan deep cleaning akhir pekan selalu dieksekusi tepat waktu dengan dokumentasi laporan yang jelas.',
+    author: 'Dewi Anggraini',
+    role: 'Procurement Lead',
+    company: 'RS MEDIKA HARAPAN',
   },
 ];
 
 export default function PortofolioSection() {
-  const container = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  useGSAP(() => {
-    gsap.fromTo(
-      '.anim-port',
-      { y: 30, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: container.current,
-          start: 'top 75%',
-        },
-      }
-    );
-  }, { scope: container });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.anim-port', {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top 85%',
+            once: true,
+          },
+        });
+      });
+    },
+    { scope: container }
+  );
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? reviews.length - 1 : prev - 1));
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev === reviews.length - 1 ? 0 : prev + 1));
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
   };
 
-  const currentReview = reviews[activeIndex];
+  const current = testimonials[activeIndex];
 
   return (
     <section
       ref={container}
       id="portofolio"
-      className="w-full bg-background py-12 md:py-20 text-text-primary overflow-hidden"
+      className="py-section-sm lg:py-section-lg bg-light-surface-secondary dark:bg-dark-surface-secondary border-b border-light-border dark:border-dark-border"
     >
-      <div className="mx-auto w-full max-w-7xl px-6">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start lg:items-center justify-between">
-          
-          {/* Sisi Kiri: Teks Header */}
-          <div className="anim-port w-full lg:w-5/12 flex flex-col justify-center">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="text-primary font-semibold text-sm md:text-base">
-                Testimoni
-              </span>
-              <span className="w-10 h-[2px] bg-primary/30 rounded-full" />
-            </div>
-
-            <h2 className="text-3xl md:text-4xl font-bold text-text-primary mb-3 leading-tight">
-              Apa Kata Pelanggan Kami
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-10 border-b border-light-border dark:border-dark-border anim-port">
+          <div className="flex flex-col gap-2">
+            <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+              PORTOFOLIO &amp; ULASAN KLIEN
+            </span>
+            <h2 className="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface dark:text-dark-on-surface">
+              Dipercaya Berbagai Institusi Korporat
             </h2>
-
-            <p className="body-text text-text-secondary text-sm md:text-base max-w-md">
-              Dipercaya oleh berbagai perusahaan dan organisasi yang yakin pada kualitas layanan kami.
-            </p>
           </div>
 
-          {/* Sisi Kanan: Kartu Testimoni */}
-          <div className="anim-port w-full lg:w-7/12">
-            <div className="bg-background rounded-2xl p-6 sm:p-8 md:p-10 border border-border shadow-xs flex flex-col sm:flex-row gap-4 sm:gap-8 items-start">
-              
-              {/* Ikon Kutipan (Quote) */}
-              <div className="shrink-0">
-                <QuoteIcon className="w-10 h-10 md:w-12 md:h-12 text-primary fill-primary rotate-180" />
-              </div>
-
-              {/* Konten Ulasan & Navigasi */}
-              <div className="flex-1 flex flex-col justify-between w-full min-w-0">
-                <p
-                  key={`text-${currentReview.id}`}
-                  className="text-text-primary text-base md:text-lg font-medium leading-relaxed mb-8 animate-in fade-in duration-300"
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-mono-sm text-light-on-surface dark:text-dark-on-surface tabular-nums">
+              {String(activeIndex + 1).padStart(2, '0')} /{' '}
+              {String(testimonials.length).padStart(2, '0')}
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Testimoni sebelumnya"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface transition-colors duration-state-change hover:border-light-primary dark:hover:border-dark-primary hover:text-light-primary dark:hover:text-dark-accent-blue cursor-pointer"
+              >
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
                 >
-                  &ldquo;{currentReview.text}&rdquo;
-                </p>
-
-                <div className="flex items-center justify-between gap-4 mt-auto">
-                  {/* Profil Pengguna */}
-                  <div
-                    key={`author-${currentReview.id}`}
-                    className="flex items-center gap-3.5 animate-in fade-in duration-300"
-                  >
-                    <div className="w-11 h-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
-                      <span className="text-sm font-bold text-primary">
-                        {currentReview.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-sm md:text-base text-text-primary leading-snug">
-                        {currentReview.name}
-                      </h4>
-                      <p className="text-xs text-text-secondary">
-                        {currentReview.date}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Tombol Navigasi (Panah) */}
-                  <div className="flex items-center gap-2.5 shrink-0">
-                    <button
-                      onClick={handlePrev}
-                      className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-primary hover:bg-primary hover:text-white hover:border-primary transition-colors cursor-pointer"
-                      aria-label="Ulasan sebelumnya"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-primary hover:bg-primary hover:text-white hover:border-primary transition-colors cursor-pointer"
-                      aria-label="Ulasan selanjutnya"
-                    >
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
+                  <path
+                    d="M13 8H3M7 4L3 8l4 4"
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
+                  />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Testimoni berikutnya"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface transition-colors duration-state-change hover:border-light-primary dark:hover:border-dark-primary hover:text-light-primary dark:hover:text-dark-accent-blue cursor-pointer"
+              >
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 8h10M9 4l4 4-4 4"
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
+        </div>
 
+        <div className="pt-12 lg:pt-16 anim-port">
+          <div className="min-h-[220px] flex flex-col justify-between gap-10 transition-opacity duration-state-change">
+            <div
+              key={current.id}
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+            >
+              <div className="lg:col-span-9">
+                <blockquote className="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface dark:text-dark-on-surface text-balance">
+                  &ldquo;{current.quote}&rdquo;
+                </blockquote>
+              </div>
+              <div className="lg:col-span-3 lg:border-l lg:border-light-border lg:dark:border-dark-border lg:pl-8 flex flex-col gap-1">
+                <span className="font-headline text-title-md text-light-on-surface dark:text-dark-on-surface">
+                  {current.author}
+                </span>
+                <span className="font-body text-body-md text-light-on-surface-muted dark:text-dark-on-surface-muted">
+                  {current.role}
+                </span>
+                <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue pt-2">
+                  {current.company}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

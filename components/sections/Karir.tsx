@@ -1,177 +1,249 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Button, buttonVariants } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { BroomIcon, ShieldHalfIcon, TruckIcon, IconComponent } from '@/components/ui/icons';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface JobOpening {
-  id: number;
+  code: string;
+  status: string;
   title: string;
-  category: string;
+  location: string;
   description: string;
-  badges: string[];
-  icon: IconComponent;
+  applyRole: string;
 }
+
+const employeeGuarantees = [
+  'BPJS Kesehatan & Ketenagakerjaan Penuh',
+  'Pelatihan Teknis & Sertifikasi Resmi',
+  'Jenjang Karier Supervisor Lapangan',
+];
 
 const jobOpenings: JobOpening[] = [
   {
-    id: 1,
+    code: 'KODE / OPS-01',
+    status: 'FULL-TIME',
     title: 'Petugas Kebersihan Profesional',
-    category: 'Manajemen Fasilitas',
+    location: 'JAKARTA SELATAN & PUSAT',
     description:
-      'Bertanggung jawab menjaga standar kebersihan dan sanitasi tingkat tinggi di lingkungan perkantoran korporat premium.',
-    badges: ['Penuh Waktu', 'Berbagai Lokasi'],
-    icon: BroomIcon,
+      'Menjaga standar kebersihan, higienitas, dan estetika area perkantoran komersial mitra TJBC sesuai jadwal inspeksi harian. Diutamakan memiliki pengalaman minimal 1 tahun di gedung perkantoran.',
+    applyRole: 'Petugas Kebersihan Profesional (OPS-01)',
   },
   {
-    id: 2,
+    code: 'KODE / SEC-02',
+    status: 'FULL-TIME',
     title: 'Petugas Keamanan (Security)',
-    category: 'Layanan Keamanan',
+    location: 'JABODETABEK',
     description:
-      'Memastikan keamanan, ketertiban, dan keselamatan lingkungan kerja serta aset bagi mitra korporat kami.',
-    badges: ['Penuh Waktu', 'Sistem Shift'],
-    icon: ShieldHalfIcon,
+      'Melaksanakan pengamanan aset gedung, pemeriksaan akses tamu dan kendaraan, serta patroli berkala. Wajib memiliki sertifikat Gada Pratama aktif dan KTA yang masih berlaku.',
+    applyRole: 'Petugas Keamanan / Security (SEC-02)',
   },
   {
-    id: 3,
+    code: 'KODE / DRV-03',
+    status: 'FULL-TIME',
     title: 'Pengemudi Eksekutif',
-    category: 'Logistik & Transportasi',
+    location: 'JAKARTA SELATAN',
     description:
-      'Memberikan layanan mobilitas yang aman, tepat waktu, dan profesional untuk jajaran eksekutif perusahaan.',
-    badges: ['Kontrak', 'Jakarta Pusat'],
-    icon: TruckIcon,
+      'Mendukung mobilitas jajaran direksi perusahaan mitra dengan ketepatan waktu dan etika berkendara tinggi. Wajib memiliki SIM A aktif, menguasai rute Jabodetabek, dan berpenampilan rapi.',
+    applyRole: 'Pengemudi Eksekutif (DRV-03)',
   },
 ];
 
 export default function Karir() {
   const container = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    gsap.from('.anim-karir-hero', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      delay: 0.1,
-    });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.anim-karir-hero', {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        });
 
-    gsap.from('.anim-karir-jobs', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '#lowongan',
-        start: 'top 80%',
-      },
-    });
-  }, { scope: container });
+        gsap.from('.anim-karir-jobs', {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: '#lowongan',
+            start: 'top 85%',
+            once: true,
+          },
+        });
+      });
+    },
+    { scope: container }
+  );
 
   return (
-    <div ref={container} className="w-full min-h-screen bg-background pt-20">
-      {/* Hero Section */}
-      <section className="w-full py-20 md:py-28 bg-background">
-        <div className="max-w-3xl mx-auto px-6 text-center flex flex-col items-center">
-          <h1 className="anim-karir-hero text-text-primary text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6">
-            Bergabung Bersama <br />
-            Tim Kami
-          </h1>
-          <p className="anim-karir-hero body-text text-text-secondary text-sm sm:text-base md:text-lg max-w-2xl mx-auto mb-8 leading-relaxed">
-            Kami percaya bahwa sumber daya manusia adalah aset terbesar kami. Kami mencari individu berdedikasi yang memiliki komitmen sama terhadap keunggulan, integritas, dan pelayanan terbaik.
-          </p>
-          <div className="anim-karir-hero">
-            <a
-              href="#lowongan"
-              className={buttonVariants({
-                size: 'lg',
-                className: 'rounded-xl px-8 h-12 font-semibold shadow-sm',
-              })}
-            >
-              Lihat Lowongan
-            </a>
+    <div ref={container} className="w-full flex-1 bg-light-surface dark:bg-dark-surface">
+      {/* 1. HERO KARIR */}
+      <section className="border-b border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16 lg:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+            <div className="lg:col-span-8 flex flex-col gap-6">
+              <div className="anim-karir-hero inline-flex items-center gap-3">
+                <span className="w-6 h-px bg-light-primary dark:bg-dark-accent-blue" />
+                <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+                  KARIR &amp; REKRUTMEN TJBC
+                </span>
+              </div>
+
+              <h1 className="anim-karir-hero font-display text-display-lg-mobile md:text-display-lg text-light-on-surface dark:text-dark-on-surface text-balance">
+                Bertumbuh Bersama Standar Kerja Profesional.
+              </h1>
+
+              <p className="anim-karir-hero font-body text-body-lg text-light-on-surface-muted dark:text-dark-on-surface-muted max-w-prose text-pretty">
+                PT Tunas Jaya Bersinar Cemerlang membuka peluang karier bagi individu berintegritas
+                yang mengutamakan ketelitian, kedisiplinan, dan pelayanan prima di lingkungan kerja
+                korporat.
+              </p>
+
+              <div className="anim-karir-hero pt-2">
+                <a
+                  href="#lowongan"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change ease-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
+                >
+                  <span>Lihat Lowongan</span>
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M8 3v10M4 9l4 4 4-4"
+                      strokeLinecap="square"
+                      strokeLinejoin="miter"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <div className="anim-karir-hero lg:col-span-4 lg:border-l lg:border-light-border lg:dark:border-dark-border lg:pl-8 flex flex-col gap-4">
+              <span className="font-mono text-mono-sm uppercase text-light-on-surface-muted dark:text-dark-on-surface-muted">
+                JAMINAN KARYAWAN
+              </span>
+              <ul className="flex flex-col gap-3 font-body text-body-md text-light-on-surface dark:text-dark-on-surface">
+                {employeeGuarantees.map((item) => (
+                  <li key={item} className="flex items-center gap-2.5">
+                    <span className="w-1.5 h-1.5 bg-light-primary dark:bg-dark-accent-blue shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Lowongan Terbuka Section */}
-      <section id="lowongan" className="w-full py-16 md:py-24 bg-surface/60">
-        <div className="max-w-7xl mx-auto px-6">
-          {/* Header Lowongan */}
-          <div className="anim-karir-jobs text-center max-w-2xl mx-auto mb-12 md:mb-16">
-            <h2 className="text-text-primary text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              Lowongan Terbuka
-            </h2>
-            <p className="body-text text-text-secondary text-sm sm:text-base">
-              Temukan posisi yang sesuai untuk berkembang bersama penyedia layanan fasilitas dan alih daya terkemuka.
-            </p>
+      {/* 2. LOWONGAN TERBUKA (#lowongan) — 3 Editorial Job Cards */}
+      <section
+        id="lowongan"
+        className="py-section-sm lg:py-section-lg bg-light-surface-secondary dark:bg-dark-surface-secondary"
+      >
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-10 border-b border-light-border dark:border-dark-border mb-10 anim-karir-jobs">
+            <div className="flex flex-col gap-2">
+              <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+                POSISI TERSEDIA
+              </span>
+              <h2 className="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface dark:text-dark-on-surface">
+                Lowongan Terbuka
+              </h2>
+            </div>
+            <span className="font-mono text-mono-sm uppercase text-light-on-surface-muted dark:text-dark-on-surface-muted">
+              {String(jobOpenings.length).padStart(2, '0')} POSISI AKTIF
+            </span>
           </div>
 
-          {/* Grid Lowongan Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {jobOpenings.map((job) => {
-              const Icon = job.icon;
-              return (
-                <Card
-                  key={job.id}
-                  className="anim-karir-jobs bg-background border-border/60 shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between rounded-2xl p-2"
-                >
-                  <div>
-                    <CardHeader className="flex flex-row items-center gap-4 space-y-0 pb-4">
-                      <div className="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center shrink-0 text-primary">
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <div className="flex flex-col">
-                        <CardTitle className="text-lg md:text-xl font-bold leading-snug text-text-primary">
-                          {job.title}
-                        </CardTitle>
-                        <CardDescription className="text-xs md:text-sm text-text-secondary mt-0.5">
-                          {job.category}
-                        </CardDescription>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="pb-6">
-                      <p className="body-text text-text-secondary text-sm md:text-base leading-relaxed mb-6">
-                        {job.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {job.badges.map((badge, idx) => (
-                          <Badge
-                            key={idx}
-                            variant="secondary"
-                            className="bg-primary-container text-on-primary-container hover:bg-primary-container/80 font-semibold text-xs px-3 py-1 border-0"
-                          >
-                            {badge}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+            {jobOpenings.map((job) => (
+              <article
+                key={job.code}
+                className="h-full p-7 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card flex flex-col justify-between gap-8 transition-colors duration-state-change hover:border-light-primary dark:hover:border-dark-primary anim-karir-jobs"
+              >
+                <div className="flex flex-col gap-5">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+                      {job.code}
+                    </span>
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-secondary dark:bg-dark-surface-secondary text-light-on-surface dark:text-dark-on-surface font-mono text-mono-sm uppercase">
+                      {job.status}
+                    </span>
                   </div>
 
-                  <CardFooter className="pt-0">
-                    <Button
-                      variant="outline"
-                      className="w-full rounded-xl border-primary/50 text-primary font-semibold hover:bg-primary hover:text-white transition-colors h-11 cursor-pointer"
-                    >
-                      Lamar Sekarang
-                    </Button>
-                  </CardFooter>
-                </Card>
-              );
-            })}
+                  <div className="flex flex-col gap-2">
+                    <h3 className="font-headline text-title-md text-light-on-surface dark:text-dark-on-surface">
+                      {job.title}
+                    </h3>
+                    <span className="font-mono text-mono-sm uppercase text-light-on-surface-muted dark:text-dark-on-surface-muted">
+                      {job.location}
+                    </span>
+                  </div>
+
+                  <p className="font-body text-body-md text-light-on-surface-muted dark:text-dark-on-surface-muted text-pretty">
+                    {job.description}
+                  </p>
+                </div>
+
+                <footer className="pt-5 border-t border-light-border dark:border-dark-border">
+                  <Link
+                    href={`/karir/lamar?posisi=${encodeURIComponent(job.applyRole)}`}
+                    className="inline-flex items-center justify-center gap-2 w-full px-5 py-3 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
+                  >
+                    <span>Lamar Posisi Ini</span>
+                  </Link>
+                </footer>
+              </article>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* FLOATING WHATSAPP BUTTON */}
+      <div className="fixed bottom-6 right-6 z-40 group">
+        <a
+          href="https://wa.me/6281294007820"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Konsultasi via WhatsApp TJBC"
+          className="inline-flex items-center gap-3 px-4 py-3 rounded-sm border border-light-border dark:border-dark-border bg-deep-navy text-on-deep-navy transition-colors duration-state-change hover:bg-brand-blue"
+        >
+          <svg
+            className="w-5 h-5 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            aria-hidden="true"
+          >
+            <path
+              d="M20 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-4.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span className="hidden md:inline-block max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-xs transition-all duration-state-change font-mono text-mono-sm uppercase">
+            WhatsApp Kami
+          </span>
+        </a>
+      </div>
     </div>
   );
 }
-

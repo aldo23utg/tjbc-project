@@ -1,30 +1,50 @@
 import type { Metadata } from 'next';
-import { Open_Sans, Source_Sans_3, Maven_Pro } from 'next/font/google';
+import { Inter, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import LayoutShell from '@/components/layout/LayoutShell';
 import SmoothScroller from '@/components/layout/SmoothScroller';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
-const openSans = Open_Sans({ 
-  subsets: ['latin'], 
-  variable: '--font-open-sans' 
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-plus-jakarta-sans',
 });
 
-const sourceSans = Source_Sans_3({ 
-  subsets: ['latin'], 
-  variable: '--font-source-sans' 
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-inter',
 });
 
-const mavenPro = Maven_Pro({ 
-  subsets: ['latin'], 
-  variable: '--font-maven-pro' 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-jetbrains-mono',
 });
 
 export const metadata: Metadata = {
-  title: 'PT Tunas Jaya Bersinar Cemerlang',
-  description: 'Layanan kebersihan profesional untuk Anda.',
+  title: 'PT Tunas Jaya Bersinar Cemerlang (TJBC) — Kebersihan, Pertamanan & Alih Daya Korporat',
+  description:
+    'PT Tunas Jaya Bersinar Cemerlang membantu institusi, perkantoran, dan kawasan komersial menjaga operasional harian tetap higienis, asri, dan tertata.',
 };
+
+const themeInitScript = `
+(function () {
+  var pref = 'system';
+  try {
+    pref = localStorage.getItem('tjbc-theme') || 'system';
+  } catch (e) {}
+  var isDark = pref === 'dark' || (pref === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -32,13 +52,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" suppressHydrationWarning>
-      <body className={`${openSans.variable} ${sourceSans.variable} ${mavenPro.variable} font-sans antialiased`}>
+    <html lang="id" className="scroll-smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body
+        className={`${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable} bg-light-surface dark:bg-dark-surface text-light-on-surface dark:text-dark-on-surface font-body antialiased selection:bg-light-primary selection:text-light-on-primary`}
+      >
         <ThemeProvider defaultTheme="system">
           <SmoothScroller>
-            <Navbar />
-            {children}
-            <Footer />
+            <LayoutShell navbar={<Navbar />} footer={<Footer />}>
+              {children}
+            </LayoutShell>
           </SmoothScroller>
         </ThemeProvider>
       </body>

@@ -8,67 +8,77 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const misiItems = [
-  'Mewujudkan sistem kerja yang sistematis dan mantap sehingga mampu menghasilkan sumber daya manusia yang berkualitas.',
-  'Memberikan hasil yang berkualitas serta pelayanan yang memuaskan dengan harga yang terjangkau.',
-  'Mewujudkan keseimbangan yang harmonis antara pimpinan dan karyawan sehingga tercipta komunikasi yang terarah dan kerjasama tim yang baik.',
-  'Mewujudkan kesejahteraan para karyawan sehingga meningkatkan motivasi dan loyalitas kerja.',
-  'Melatih karyawan untuk memiliki mental yang tangguh, disiplin, jujur, sopan, ramah, berpenampilan rapi dan bersih, serta kreatif dan inovatif.',
+  'Menyelenggarakan layanan kebersihan dan pemeliharaan gedung berbasis prosedur operasional standar (SOP) yang terukur dan diaudit berkala.',
+  'Mengembangkan kompetensi sumber daya manusia melalui pelatihan teknis berkelanjutan, pembinaan etika kerja, dan sertifikasi profesi.',
+  'Menerapkan teknologi peralatan modern dan bahan pembersih ramah lingkungan demi menjaga keberlanjutan aset serta kesehatan penghuni gedung.',
+  'Menjamin kepatuhan penuh terhadap regulasi ketenagakerjaan, keselamatan kerja (K3), dan hak-hak normatif seluruh personel alih daya.',
+  'Membangun kemitraan jangka panjang yang transparan, responsif, dan berorientasi pada efisiensi biaya operasional klien korporasi.',
 ];
 
 export default function VisiMisiSection() {
-  const container = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    gsap.from('.anim-visi', {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: container.current,
-        start: 'top 80%',
-      },
-    });
-  }, { scope: container });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.anim-visi', {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.1,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top 85%',
+            once: true,
+          },
+        });
+      });
+    },
+    { scope: container }
+  );
 
   return (
-    <section ref={container} id="tentang" className="px-6 py-16 md:py-24 bg-surface/30">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-          
-          {/* --- Visi --- */}
-          <div className="anim-visi lg:col-span-5 bg-primary/5 p-8 md:p-10 rounded-3xl border border-primary/10 lg:sticky lg:top-32">
-            <div className="flex items-center gap-3 mb-6">
-              <span className="w-10 h-1 rounded-full bg-primary" />
-              <h2 className="text-text-primary text-2xl md:text-3xl">Visi Kami</h2>
-            </div>
-            <p className="text-lg md:text-xl font-medium text-text-primary leading-relaxed">
-              "Menjadi Perusahaan Outsourcing & Cleaning Service yang terbaik
-              dengan menciptakan tenaga kerja yang berakhlak, berkualitas,
-              bertanggung jawab & selalu mengutamakan kepuasan pelanggan."
-            </p>
+    <section
+      ref={container}
+      id="tentang"
+      className="py-section-sm lg:py-section-lg bg-light-surface-secondary dark:bg-dark-surface-secondary border-b border-light-border dark:border-dark-border"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          <div className="lg:col-span-5 lg:sticky lg:top-28 flex flex-col gap-6 anim-visi">
+            <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+              VISI PERUSAHAAN
+            </span>
+            <blockquote className="border-l-2 border-light-primary dark:border-dark-accent-blue pl-6">
+              <p className="font-headline text-headline-lg-mobile md:text-headline-lg text-light-on-surface dark:text-dark-on-surface text-balance">
+                Menjadi mitra strategis terdepan di Indonesia dalam pengelolaan fasilitas,
+                kebersihan profesional, dan penyediaan tenaga alih daya yang berintegritas serta
+                berstandar internasional.
+              </p>
+            </blockquote>
           </div>
 
-          {/* --- Misi --- */}
-          <div className="lg:col-span-7 mt-8 lg:mt-0">
-            <div className="anim-visi flex items-center gap-3 mb-8">
-              <span className="w-10 h-1 rounded-full bg-primary" />
-              <h2 className="text-text-primary text-2xl md:text-3xl">Misi Kami</h2>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
+          <div className="lg:col-span-7 flex flex-col gap-6 anim-visi">
+            <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+              MISI KAMI
+            </span>
+
+            <div className="border-t border-light-border dark:border-dark-border divide-y divide-light-border dark:divide-dark-border">
               {misiItems.map((item, idx) => (
-                <div key={idx} className="anim-visi flex gap-4 items-start">
-                  <span className="btn-text text-primary text-lg mt-0.5 shrink-0 opacity-90 font-bold">
-                    {String(idx + 1).padStart(2, '0')}.
+                <div key={idx} className="py-7 grid grid-cols-12 gap-4 items-center">
+                  <span className="col-span-2 sm:col-span-1 font-mono text-mono-sm text-light-primary dark:text-dark-accent-blue">
+                    {String(idx + 1).padStart(2, '0')}
                   </span>
-                  <p className="body-text text-text-secondary text-sm md:text-base leading-relaxed">{item}</p>
+                  <p className="col-span-10 sm:col-span-11 font-body text-body-lg text-light-on-surface dark:text-dark-on-surface text-pretty">
+                    {item}
+                  </p>
                 </div>
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

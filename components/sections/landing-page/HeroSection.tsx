@@ -1,94 +1,102 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { ShieldCheck, Award, Zap, CalendarClock, Briefcase } from '@/components/ui/icons';
-
-const features = [
-  { icon: ShieldCheck, label: 'Terpercaya' },
-  { icon: Award, label: 'Berkualitas' },
-  { icon: Zap, label: 'Cepat' },
-  { icon: CalendarClock, label: 'Fleksibel' },
-  { icon: Briefcase, label: 'Professional' },
-];
 
 export default function HeroSection() {
-  const container = useRef<HTMLDivElement>(null);
+  const container = useRef<HTMLElement>(null);
 
-  useGSAP(() => {
-    gsap.from('.anim-hero', {
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out',
-      delay: 0.2,
-    });
-  }, { scope: container });
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from('.anim-hero', {
+          y: 18,
+          opacity: 0,
+          duration: 0.45,
+          stagger: 0.08,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity',
+        });
+      });
+    },
+    { scope: container }
+  );
 
   return (
-    <section ref={container} className="px-6 pt-32 pb-12 md:pb-16">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
-        {/* --- Sisi Kiri: Gambar --- */}
-        <div className="anim-hero flex-1 w-full max-w-lg lg:max-w-none">
-          <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-primary/10">
-            <Image
-              src="/hero-team.png"
-              alt="Tim profesional PT Tunas Jaya Bersinar Cemerlang"
-              fill
-              className="object-cover"
-              priority
-            />
-            {/* Overlay gradien halus */}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent" />
-          </div>
-          
-          {/* --- Fitur Tambahan --- */}
-          <div className="anim-hero mt-8 flex flex-nowrap justify-between items-start gap-2 md:gap-4 w-full overflow-x-auto pb-2 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            {features.map((feature, idx) => (
-              <div key={idx} className="flex flex-col items-center flex-1 min-w-[60px] md:min-w-[0]">
-                <feature.icon className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-primary mb-2 md:mb-3" strokeWidth={1.5} />
-                <span className="text-[10px] sm:text-xs md:text-base font-semibold text-text-primary text-center leading-tight">
-                  {feature.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+    <section
+      ref={container}
+      className="border-b border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface"
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 pt-12 pb-16 lg:pt-20 lg:pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-center">
+          <div className="lg:col-span-6 flex flex-col gap-6">
+            <div className="anim-hero inline-flex items-center gap-3">
+              <span className="w-6 h-px bg-light-primary dark:bg-dark-accent-blue" />
+              <span className="font-mono text-mono-sm uppercase text-light-primary dark:text-dark-accent-blue">
+                PT TUNAS JAYA BERSINAR CEMERLANG
+              </span>
+            </div>
 
-        {/* --- Sisi Kanan: Teks --- */}
-        <div className="flex-1 text-center lg:text-left">
-          <h2 className="anim-hero text-text-primary mb-6">
-            Outsourcing Profesional & Layanan Kebersihan
-          </h2>
-          <p className="anim-hero body-text text-text-secondary max-w-xl mb-4 mx-auto lg:mx-0">
-            Didirikan pada Agustus 2007, PT. Tunas Jaya Bersinar Cemerlang berkomitmen
-            menghadirkan standar baru dalam industri Outsourcing dan Cleaning Service
-            dengan menyeimbangkan keahlian teknis (hard skill) dan kekuatan karakter
-            (soft skill).
-          </p>
-          <p className="anim-hero body-text text-text-secondary max-w-xl mb-10 mx-auto lg:mx-0">
-            Di tengah persaingan industri, kami memastikan setiap personil dibekali
-            pelatihan intensif agar memiliki etika kerja, integritas, dan tanggung jawab
-            yang tinggi. Sebagai mitra strategis, Tunas Jaya siap memberikan layanan
-            profesional yang mendukung operasional serta menciptakan lingkungan kerja
-            yang bersih, asri, dan kondusif bagi pertumbuhan perusahaan Anda.
-          </p>
-          <div className="anim-hero flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <a
-              href="#kontak"
-              className="btn-text text-sm bg-primary text-white px-6 py-2.5 rounded-full hover:bg-primary-hover transition-all shadow-lg shadow-primary/25 text-center"
-            >
-              Hubungi Kami
-            </a>
-            <a
-              href="#layanan"
-              className="btn-text text-sm border-2 border-primary text-primary px-6 py-2.5 rounded-full hover:bg-primary hover:text-white transition-all text-center"
-            >
-              Layanan Kami
-            </a>
+            <h1 className="anim-hero font-display text-display-lg-mobile md:text-display-lg text-light-on-surface dark:text-dark-on-surface text-balance">
+              Standar Presisi untuk Kebersihan, Taman, dan Alih Daya Korporat.
+            </h1>
+
+            <p className="anim-hero font-body text-body-lg text-light-on-surface-muted dark:text-dark-on-surface-muted max-w-prose text-pretty">
+              Kami membantu institusi, perkantoran, dan kawasan komersial menjaga operasional
+              harian tetap higienis, asri, dan tertata melalui tenaga kerja terlatih dan sistem
+              supervisi terukur.
+            </p>
+
+            <div className="anim-hero flex flex-wrap items-center gap-4 pt-2">
+              <a
+                href="#kontak"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change ease-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
+              >
+                <span>Hubungi Kami</span>
+              </a>
+
+              <a
+                href="#layanan"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface font-label text-label-lg transition-colors duration-state-change ease-state-change hover:border-light-primary dark:hover:border-dark-primary hover:text-light-primary dark:hover:text-dark-accent-blue"
+              >
+                <span>Layanan Kami</span>
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 8h10M9 4l4 4-4 4"
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div className="anim-hero lg:col-span-6">
+            <div className="relative border border-light-border dark:border-dark-border rounded-sm bg-light-surface-card dark:bg-dark-surface-card p-2">
+              <div className="relative overflow-hidden rounded-sm aspect-[4/3]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://lh3.googleusercontent.com/aida/ALJJyrCO5bSaBouNWh0S-XhTY_z_8ohmsfp1xwhyOWxS3oxPCKpoQH4aIdXAhcc7gNYYCKU-mcoseKRGGdTKcTrDjoh5TSGjBeikpAOJFGoJI8SLAhF5D_PmXxrbaJ3o_xCsccxhZb1NQIGDiT8yYB8qlRdy7DcbbJ5538qptnNlafjMozRxOmuVggnn0hquJXXgWXkS4DXX_zAOnqBlKg7voI1FV7rE5NvAYsjdA_JcseXoMsKIvZDbbho"
+                  alt="Tim operasional profesional PT Tunas Jaya Bersinar Cemerlang di lobi gedung korporat"
+                  className="w-full h-full object-cover"
+                  fetchPriority="high"
+                />
+                <div className="absolute bottom-0 left-0 bg-deep-navy text-on-deep-navy px-4 py-2.5 border-t border-r border-deep-navy-border">
+                  <span className="font-mono text-mono-sm uppercase">
+                    OPERASIONAL TERSTANDAR / JABODETABEK
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

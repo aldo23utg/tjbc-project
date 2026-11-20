@@ -1,203 +1,200 @@
 @import "tailwindcss";
 
-:root {
-  /* Brand */
-  --primary: #1c3d9a;
-  --primary-hover: #152c75;
-  --primary-container: #ebf0ff;
-  --on-primary-container: #1c3d9a;
+@custom-variant dark (&:where(.dark, .dark *));
 
-  /* Secondary */
-  --secondary: #64748b;
-  
-  /* Background & Surface */
-  --background: #ffffff;
-  --surface: #f8fafc;
-  
-  /* Typography */
-  --text-primary: #0f172a;
+:root {
+  /* Semantic fallbacks mapped to Light tokens */
+  --primary: #0B4F9E;
+  --primary-hover: #0A192F;
+  --primary-container: #F1F5F9;
+  --on-primary-container: #0B4F9E;
+  --secondary: #475569;
+  --background: #FAFBFD;
+  --surface: #FFFFFF;
+  --text-primary: #0A192F;
   --text-secondary: #475569;
-  
-  /* Border */
-  --border: #e2e8f0;
-  
-  /* Alerts */
-  --success: #88c7a1;
-  --success-bg: #ecf7f0;
-  --error: #e8908c;
-  --error-container: #fceeed;
-  --warning: #e6c37a;
-  --warning-bg: #fcf6ea;
-  --info: #8fb2e6;
-  --info-bg: #edf3fb;
-  
-  /* Charts */
-  --chart-1: #1c3d9a;
-  --chart-2: #3b82f6;
-  --chart-3: #60a5fa;
-  --chart-4: #64748b;
-  --chart-5: #94a3b8;
-  --chart-6: #cbd5e1;
+  --border: #E2E8F0;
 }
 
 .dark {
-    /* Brand */
-    --primary: #4b7bff;
-    --primary-hover: #749aff;
-    --primary-container: #1e293b;
-    --on-primary-container: #ffffff;
-
-    /* Secondary */
-    --secondary: #94a3b8;
-    
-    /* Background & Surface */
-    --background: #0b1120;
-    --surface: #111827;
-    
-    /* Typography */
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    
-    /* Border */
-    --border: #334155;
-    
-    /* Alerts (Warna base sama, background/container menyesuaikan) */
-    --success-bg: #152a20;
-    --error-container: #361e1d;
-    --warning-bg: #332817;
-    --info-bg: #192336;
-    
-    /* Charts */
-    --chart-1: #4b7bff;
-    --chart-2: #60a5fa;
-    --chart-3: #93c5fd;
-    --chart-4: #94a3b8;
-    --chart-5: #64748b;
-    --chart-6: #475569;
-  }
+  --primary: #3B82F6;
+  --primary-hover: #60A5FA;
+  --primary-container: #132238;
+  --on-primary-container: #60A5FA;
+  --secondary: #94A3B8;
+  --background: #070E1A;
+  --surface: #0F1B2E;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --border: #1E2E48;
+}
 
 @theme inline {
+  /* Core Palette Tokens */
+  --color-brand-blue: #0B4F9E;
+  --color-on-brand-blue: #FFFFFF;
+  --color-deep-navy: #0A192F;
+  --color-on-deep-navy: #F1F5F9;
+  --color-deep-navy-muted: #94A3B8;
+  --color-deep-navy-border: #1E2E48;
+  --color-success: #0F766E;
+  --color-on-success: #FFFFFF;
+
+  /* Light Mode Tokens */
+  --color-light-primary: #0B4F9E;
+  --color-light-on-primary: #FFFFFF;
+  --color-light-surface: #FAFBFD;
+  --color-light-surface-card: #FFFFFF;
+  --color-light-surface-secondary: #F1F5F9;
+  --color-light-on-surface: #0A192F;
+  --color-light-on-surface-muted: #475569;
+  --color-light-border: #E2E8F0;
+
+  /* Dark Mode Tokens */
+  --color-dark-primary: #3B82F6;
+  --color-dark-on-primary: #070E1A;
+  --color-dark-accent-blue: #60A5FA;
+  --color-dark-surface: #070E1A;
+  --color-dark-surface-card: #0F1B2E;
+  --color-dark-surface-secondary: #132238;
+  --color-dark-on-surface: #F1F5F9;
+  --color-dark-on-surface-muted: #94A3B8;
+  --color-dark-border: #1E2E48;
+
+  /* Semantic aliases */
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-container: var(--primary-container);
   --color-on-primary-container: var(--on-primary-container);
-  
   --color-secondary: var(--secondary);
-  
   --color-background: var(--background);
   --color-surface: var(--surface);
-  
   --color-text-primary: var(--text-primary);
   --color-text-secondary: var(--text-secondary);
-  
   --color-border: var(--border);
-  
-  --color-success: var(--success);
-  --color-success-bg: var(--success-bg);
-  --color-error: var(--error);
-  --color-error-container: var(--error-container);
-  --color-warning: var(--warning);
-  --color-warning-bg: var(--warning-bg);
-  --color-info: var(--info);
-  --color-info-bg: var(--info-bg);
-  
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-chart-6: var(--chart-6);
 
-  /* Fonts (Typography System) */
-  --font-primary: var(--font-open-sans);
-  --font-secondary: var(--font-source-sans);
-  --font-tertiary: var(--font-maven-pro);
-  
-  --font-sans: var(--font-tertiary);
+  /* Border Radius */
+  --radius-none: 0px;
+  --radius-sm: 2px;
+  --radius-DEFAULT: 4px;
+  --radius-md: 6px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --spacing-gutter-xs: 4px;
+  --spacing-gutter-sm: 8px;
+  --spacing-gutter-md: 16px;
+  --spacing-gutter-lg: 24px;
+  --spacing-gutter-xl: 32px;
+  --spacing-section-sm: 48px;
+  --spacing-section-lg: 96px;
+  --spacing-page-margin: 24px;
+
+  /* Typography Families */
+  --font-display: var(--font-plus-jakarta-sans), sans-serif;
+  --font-headline: var(--font-plus-jakarta-sans), sans-serif;
+  --font-title: var(--font-plus-jakarta-sans), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+  --font-label: var(--font-plus-jakarta-sans), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-sans: var(--font-inter), sans-serif;
+
+  /* Typography Scale */
+  --text-display-lg: 56px;
+  --text-display-lg--line-height: 62px;
+  --text-display-lg--letter-spacing: -1.12px;
+  --text-display-lg--font-weight: 700;
+
+  --text-display-lg-mobile: 32px;
+  --text-display-lg-mobile--line-height: 38px;
+  --text-display-lg-mobile--letter-spacing: -0.64px;
+  --text-display-lg-mobile--font-weight: 700;
+
+  --text-headline-xl: 44px;
+  --text-headline-xl--line-height: 50px;
+  --text-headline-xl--letter-spacing: -0.88px;
+  --text-headline-xl--font-weight: 700;
+
+  --text-headline-xl-mobile: 28px;
+  --text-headline-xl-mobile--line-height: 34px;
+  --text-headline-xl-mobile--letter-spacing: -0.56px;
+  --text-headline-xl-mobile--font-weight: 700;
+
+  --text-headline-lg: 36px;
+  --text-headline-lg--line-height: 42px;
+  --text-headline-lg--letter-spacing: -0.72px;
+  --text-headline-lg--font-weight: 600;
+
+  --text-headline-lg-mobile: 24px;
+  --text-headline-lg-mobile--line-height: 30px;
+  --text-headline-lg-mobile--letter-spacing: -0.48px;
+  --text-headline-lg-mobile--font-weight: 600;
+
+  --text-headline-md: 24px;
+  --text-headline-md--line-height: 32px;
+  --text-headline-md--letter-spacing: -0.48px;
+  --text-headline-md--font-weight: 600;
+
+  --text-title-md: 18px;
+  --text-title-md--line-height: 26px;
+  --text-title-md--letter-spacing: -0.18px;
+  --text-title-md--font-weight: 600;
+
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 28px;
+  --text-body-lg--letter-spacing: 0px;
+  --text-body-lg--font-weight: 400;
+
+  --text-body-md: 15px;
+  --text-body-md--line-height: 25px;
+  --text-body-md--letter-spacing: 0px;
+  --text-body-md--font-weight: 400;
+
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0px;
+  --text-label-lg--font-weight: 600;
+
+  --text-mono-lg: 40px;
+  --text-mono-lg--line-height: 44px;
+  --text-mono-lg--letter-spacing: -0.8px;
+  --text-mono-lg--font-weight: 500;
+
+  --text-mono-lg-mobile: 28px;
+  --text-mono-lg-mobile--line-height: 32px;
+  --text-mono-lg-mobile--letter-spacing: -0.56px;
+  --text-mono-lg-mobile--font-weight: 500;
+
+  --text-mono-sm: 12px;
+  --text-mono-sm--line-height: 16px;
+  --text-mono-sm--letter-spacing: 1.2px;
+  --text-mono-sm--font-weight: 500;
+
+  /* Easing */
+  --ease-state-change: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-surface-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drawer-slide: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@layer base {
-  /* --- A. Hero Section --- */
-  .hero-title {
-    font-family: var(--font-primary);
-    @apply font-extrabold text-4xl md:text-5xl lg:text-6xl leading-tight text-slate-800 dark:text-slate-100;
-  }
-  
-  .hero-subtitle {
-    font-family: var(--font-secondary);
-    @apply font-medium text-xl md:text-2xl leading-normal text-slate-500 dark:text-slate-400;
-  }
-
-  /* --- B. Konten Paragraf (Heading Dasar) --- */
-  h1 {
-    font-family: var(--font-primary);
-    @apply font-bold text-3xl md:text-5xl lg:text-6xl leading-tight;
-  }
-
-  h2 {
-    font-family: var(--font-primary);
-    @apply font-bold text-2xl md:text-3xl lg:text-4xl leading-snug;
-  }
-  
-  h3 {
-    font-family: var(--font-secondary);
-    @apply font-semibold text-2xl;
-  }
-  
-  p, .body-text {
-    font-family: var(--font-tertiary);
-    @apply font-normal text-base leading-relaxed;
-  }
-
-  /* --- C. Card Component --- */
-  .card-title {
-    font-family: var(--font-primary);
-    @apply font-semibold text-xl leading-[1.4];
-  }
-  
-  .card-meta {
-    font-family: var(--font-secondary);
-    @apply font-semibold text-xs uppercase tracking-wider;
-  }
-  
-  .card-excerpt {
-    font-family: var(--font-tertiary);
-    @apply font-normal text-sm leading-[1.5];
-  }
-
-  /* --- D. Form & Elemen UI Interaktif --- */
-  .form-label {
-    font-family: var(--font-secondary);
-    @apply font-semibold text-sm text-slate-700 dark:text-slate-300;
-  }
-  
-  .form-input {
-    font-family: var(--font-tertiary);
-    @apply font-normal text-base;
-  }
-  
-  .btn-text {
-    font-family: var(--font-primary);
-    @apply font-bold text-base;
-  }
-  
-  .helper-text {
-    font-family: var(--font-secondary);
-    @apply font-normal text-xs;
-  }
+@utility duration-state-change {
+  transition-duration: 180ms;
 }
 
-body {
-  background: var(--background);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
+@utility duration-surface-enter {
+  transition-duration: 450ms;
 }
 
-@keyframes aurora {
-  from {
-    background-position: 50% 50%, 50% 50%;
-  }
-  to {
-    background-position: 350% 50%, 350% 50%;
-  }
+@utility duration-drawer-slide {
+  transition-duration: 280ms;
+}
+
+.arch-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
