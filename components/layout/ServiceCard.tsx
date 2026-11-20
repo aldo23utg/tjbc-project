@@ -54,7 +54,7 @@ export function ServiceCard({
         
         {/* CTA */}
         <a
-          href="#"
+          href="/layanan"
           className="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all duration-300 mt-auto"
         >
           Selengkapnya

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import Layanan from '@/components/sections/Layanan';
+import Layanan from '@/components/sections/Layanan/Layanan';
 
 export const metadata: Metadata = {
   title: 'Layanan — PT Tunas Jaya Bersinar Cemerlang (TJBC)',

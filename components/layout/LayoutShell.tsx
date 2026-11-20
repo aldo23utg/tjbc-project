@@ -10,7 +10,8 @@ interface LayoutShellProps {
 
 export default function LayoutShell({ navbar, footer, children }: LayoutShellProps) {
   const pathname = usePathname();
-  const isFocusedFlow = pathname.startsWith('/karir/lamar');
+  const isFocusedFlow =
+    pathname.startsWith('/karir/lamar') || pathname.startsWith('/layanan/');
 
   return (
     <div className="min-h-screen flex flex-col">

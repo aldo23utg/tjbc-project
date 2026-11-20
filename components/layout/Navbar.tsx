@@ -70,26 +70,26 @@ export default function Navbar() {
             <Link
               href="/layanan"
               className={`relative py-2 font-label text-label-lg transition-colors duration-state-change ${
-                pathname === '/layanan'
+                pathname.startsWith('/layanan')
                   ? 'text-light-primary dark:text-dark-accent-blue'
                   : 'text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface'
               }`}
             >
               <span>Layanan</span>
-              {pathname === '/layanan' && (
+              {pathname.startsWith('/layanan') && (
                 <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-light-primary dark:bg-dark-accent-blue" />
               )}
             </Link>
             <Link
               href="/karir"
               className={`relative py-2 font-label text-label-lg transition-colors duration-state-change ${
-                pathname === '/karir'
+                pathname.startsWith('/karir')
                   ? 'text-light-primary dark:text-dark-accent-blue'
                   : 'text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface'
               }`}
             >
               <span>Karir</span>
-              {pathname === '/karir' && (
+              {pathname.startsWith('/karir') && (
                 <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-light-primary dark:bg-dark-accent-blue" />
               )}
             </Link>
@@ -186,7 +186,7 @@ export default function Navbar() {
               href="/layanan"
               onClick={closeDrawer}
               className={`py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md flex items-center justify-between ${
-                pathname === '/layanan'
+                pathname.startsWith('/layanan')
                   ? 'text-light-primary dark:text-dark-accent-blue'
                   : 'text-light-on-surface dark:text-dark-on-surface'
               }`}
@@ -198,7 +198,7 @@ export default function Navbar() {
               href="/karir"
               onClick={closeDrawer}
               className={`py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md flex items-center justify-between ${
-                pathname === '/karir'
+                pathname.startsWith('/karir')
                   ? 'text-light-primary dark:text-dark-accent-blue'
                   : 'text-light-on-surface dark:text-dark-on-surface'
               }`}

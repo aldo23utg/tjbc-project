@@ -8,6 +8,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const WHATSAPP_NUMBER = '6281294007820';
+
+function buildWhatsAppUrl(serviceName: string) {
+  const text = `Halo TJBC, saya ingin berkonsultasi mengenai layanan ${serviceName}.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+}
+
 const servedSectors = [
   'Perusahaan',
   'Cafe',
@@ -40,7 +47,8 @@ interface ServiceOption {
   badge: string;
   title: string;
   description: string;
-  ctaLabel: string;
+  primaryCtaLabel: 'Atur Jadwal' | 'Ajukan Kontrak';
+  primaryCtaHref: string;
 }
 
 const serviceOptions: ServiceOption[] = [
@@ -50,7 +58,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'General Cleaning Cakupan Lebih Kecil',
     description:
       'Pembersihan terfokus berdasarkan lantai gedung tertentu, ruangan spesifik (ruang rapat, ruang direksi, pantry), maupun perawatan furniture tertentu seperti sofa, karpet, dan partisi.',
-    ctaLabel: 'Jadwalkan Pembersihan',
+    primaryCtaLabel: 'Atur Jadwal',
+    primaryCtaHref: '/layanan/atur-jadwal',
   },
   {
     code: '03 / RESIDENSIAL',
@@ -58,7 +67,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'General Cleaning untuk Rumah',
     description:
       'Pembersihan menyeluruh untuk hunian pribadi dan town house—mulai dari ruang keluarga, kamar tidur, dapur, kamar mandi, hingga area teras dengan bahan pembersih aman bagi keluarga.',
-    ctaLabel: 'Pesan Layanan Rumah',
+    primaryCtaLabel: 'Atur Jadwal',
+    primaryCtaHref: '/layanan/atur-jadwal-rumah',
   },
   {
     code: '04 / LANSKAP',
@@ -66,7 +76,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'Perawatan Taman',
     description:
       'Pemeliharaan taman dan ruang terbuka hijau meliputi pemangkasan rumput dan tajuk, pemupukan berkala, pengendalian hama, serta perawatan tanaman indoor dan atrium gedung.',
-    ctaLabel: 'Konsultasi Taman',
+    primaryCtaLabel: 'Ajukan Kontrak',
+    primaryCtaHref: '/layanan/kontrak-taman',
   },
   {
     code: '05 / ALIH DAYA',
@@ -74,7 +85,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'Kontrak OB',
     description:
       'Penyediaan Office Boy / Office Girl terlatih untuk mendukung kebersihan ruang kerja harian, penyiapan ruang rapat, layanan pantry, serta pengurusan operasional kantor dengan sistem kontrak resmi.',
-    ctaLabel: 'Ajukan Kontrak OB',
+    primaryCtaLabel: 'Ajukan Kontrak',
+    primaryCtaHref: '/layanan/kontrak-ob',
   },
   {
     code: '06 / KEAMANAN',
@@ -82,7 +94,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'Kontrak Satpam',
     description:
       'Penyediaan petugas keamanan (Security) bersertifikat Gada Pratama dan KTA aktif untuk pengamanan aset gedung, kontrol akses tamu dan kendaraan, patroli 24 jam, serta pelaporan insiden harian.',
-    ctaLabel: 'Ajukan Kontrak Satpam',
+    primaryCtaLabel: 'Ajukan Kontrak',
+    primaryCtaHref: '/layanan/kontrak-satpam',
   },
   {
     code: '07 / TRANSPORTASI',
@@ -90,7 +103,8 @@ const serviceOptions: ServiceOption[] = [
     title: 'Kontrak Supir',
     description:
       'Penyediaan pengemudi eksekutif dan operasional perusahaan yang berpengalaman, berpenampilan rapi, menguasai rute Jabodetabek, serta memiliki rekam jejak berkendara yang aman dan disiplin.',
-    ctaLabel: 'Ajukan Kontrak Supir',
+    primaryCtaLabel: 'Ajukan Kontrak',
+    primaryCtaHref: '/layanan/kontrak-supir',
   },
 ];
 
@@ -180,12 +194,14 @@ export default function Layanan() {
                   properti:
                 </p>
               </div>
-              <Link
-                href="/#kontak"
+              <a
+                href={buildWhatsAppUrl('General Cleaning (Cakupan Besar)')}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
               >
-                <span>Konsultasi Layanan</span>
-              </Link>
+                <span>Konsultasikan Layanan</span>
+              </a>
             </div>
 
             {/* Sektor yang Dilayani (Collapsible Dropdown List) */}
@@ -246,14 +262,22 @@ export default function Layanan() {
                   </p>
                 </div>
 
-                <footer className="pt-4 border-t border-light-border dark:border-dark-border">
-                  <Link
-                    href="/#kontak"
-                    className="group inline-flex items-center justify-between w-full font-label text-label-lg text-light-primary dark:text-dark-accent-blue"
+                <footer className="pt-5 border-t border-light-border dark:border-dark-border grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <a
+                    href={buildWhatsAppUrl(item.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm border border-light-border dark:border-dark-border bg-light-surface dark:bg-dark-surface text-light-on-surface dark:text-dark-on-surface font-label text-label-lg transition-colors duration-state-change hover:border-light-primary dark:hover:border-dark-primary hover:text-light-primary dark:hover:text-dark-accent-blue"
                   >
-                    <span>{item.ctaLabel}</span>
+                    <span>Konsultasikan Layanan</span>
+                  </a>
+                  <Link
+                    href={item.primaryCtaHref}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-sm bg-light-primary dark:bg-dark-primary text-light-on-primary dark:text-dark-on-primary font-label text-label-lg transition-colors duration-state-change hover:bg-deep-navy dark:hover:bg-dark-accent-blue"
+                  >
+                    <span>{item.primaryCtaLabel}</span>
                     <svg
-                      className="w-4 h-4 transition-transform duration-state-change group-hover:translate-x-1"
+                      className="w-4 h-4"
                       viewBox="0 0 16 16"
                       fill="none"
                       stroke="currentColor"
@@ -277,7 +301,7 @@ export default function Layanan() {
       {/* FLOATING WHATSAPP BUTTON */}
       <div className="fixed bottom-6 right-6 z-40 group">
         <a
-          href="https://wa.me/6281294007820"
+          href={`https://wa.me/${WHATSAPP_NUMBER}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Konsultasi via WhatsApp TJBC"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
@@ -57,8 +58,8 @@ export default function HeroSection() {
                 <span>Hubungi Kami</span>
               </a>
 
-              <a
-                href="#layanan"
+              <Link
+                href="/layanan"
                 className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-sm border border-light-border dark:border-dark-border bg-light-surface-card dark:bg-dark-surface-card text-light-on-surface dark:text-dark-on-surface font-label text-label-lg transition-colors duration-state-change ease-state-change hover:border-light-primary dark:hover:border-dark-primary hover:text-light-primary dark:hover:text-dark-accent-blue"
               >
                 <span>Layanan Kami</span>
@@ -76,7 +77,7 @@ export default function HeroSection() {
                     strokeLinejoin="miter"
                   />
                 </svg>
-              </a>
+              </Link>
             </div>
           </div>
 
