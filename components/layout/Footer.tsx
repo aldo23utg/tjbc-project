@@ -41,7 +41,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#layanan"
+                  href="/layanan"
                   className="text-on-deep-navy hover:text-dark-accent-blue transition-colors duration-state-change"
                 >
                   Layanan

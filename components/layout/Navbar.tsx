@@ -68,10 +68,17 @@ export default function Navbar() {
               )}
             </Link>
             <Link
-              href="/#layanan"
-              className="relative py-2 font-label text-label-lg text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface transition-colors duration-state-change"
+              href="/layanan"
+              className={`relative py-2 font-label text-label-lg transition-colors duration-state-change ${
+                pathname === '/layanan'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface-muted dark:text-dark-on-surface-muted hover:text-light-on-surface dark:hover:text-dark-on-surface'
+              }`}
             >
               <span>Layanan</span>
+              {pathname === '/layanan' && (
+                <span className="absolute left-0 right-0 bottom-0 h-0.5 bg-light-primary dark:bg-dark-accent-blue" />
+              )}
             </Link>
             <Link
               href="/karir"
@@ -176,9 +183,13 @@ export default function Navbar() {
               <span className="font-mono text-mono-sm">01</span>
             </Link>
             <Link
-              href="/#layanan"
+              href="/layanan"
               onClick={closeDrawer}
-              className="py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md text-light-on-surface dark:text-dark-on-surface flex items-center justify-between"
+              className={`py-3 border-b border-light-border dark:border-dark-border font-headline text-headline-md flex items-center justify-between ${
+                pathname === '/layanan'
+                  ? 'text-light-primary dark:text-dark-accent-blue'
+                  : 'text-light-on-surface dark:text-dark-on-surface'
+              }`}
             >
               <span>Layanan</span>
               <span className="font-mono text-mono-sm">02</span>
